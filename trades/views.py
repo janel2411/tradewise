@@ -1,12 +1,16 @@
 from django.http import HttpResponse
 from tradewise.mongo_client import db
+from django.shortcuts import render
 
-def index(request):
-    trades_collection = db.trades
-    trade = {
-        "user": "example_user",
-        "trade_details": "example_trade"
-    }
-    trades_collection.insert_one(trade)
-    trades = list(trades_collection.find())
-    return HttpResponse(f"Hello, world. You're at the trades index. Current trades: {trades}")
+def home(request):
+    return render(request,"authentication/index.html")
+
+
+def signup(request):
+    return render(request,"authentication/signup.html")
+
+def login(request):
+    return render(request,"authentication/login.html")
+
+def signout(request):
+    pass
