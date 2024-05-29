@@ -44,33 +44,29 @@ TradeWise is a web application designed to provide users with a seamless experie
    git clone https://github.com/your-username/tradewise.git
    cd tradewise
 
-Create an activate the virtual environemnt needed for Python
-python3 -m venv tradewise_env
-source tradewise_env/bin/activate
-Install the necessary packages
-pip install -r requirements.txt
-Run the migrations
-python manage.py migrate
-Collect the static files needed
-python manage.py collectstatic
-Run the development server
-python manage.py runserver
-Access using: http://127.0.0.1:8000/
+- Create an activate the virtual environemnt needed for Python: python3 -m venv tradewise_env source tradewise_env/bin/activate
+- Install the necessary packages: pip install -r requirements.txt
+- Run the migrations: python manage.py migrate
+- Collect the static files needed: python manage.py collectstatic
+- Run the development server: python manage.py runserver
+- Access using: http://127.0.0.1:8000/
 
 Folder Structure
-templates/ - Contains the HTML templates for the project.
+templates/  Contains the HTML templates for the project.
 - index.html - Home page template.
 - signup.html - Sign-up form template.
 - login.html - Login form template.
+
 static/css/ - Contains the CSS files for styling.
 - index.css - Stylesheet for the home page.
 - signup.css - Stylesheet for the sign-up page.
 - login.css - Stylesheet for the login page.
+  
 tradewise/ - Django project settings and configurations.
 - urls.py - URL routing for the project.
 - views.py - View functions for handling requests.
 
 Future Enhancements for MS 1
-Have designed our content and lesson structure for Chapter 1. Will build the lesson platform.
-Will install the quiz for Chapter 1 and build the XP Points System.
+- Have designed our content and lesson structure for Chapter 1. Will build the lesson platform.
+- Will install the quiz for Chapter 1 and build the XP Points System.
 
