@@ -4,6 +4,13 @@
 
 TradeWise is a web application designed to provide users with a seamless experience for managing their accounts. This README file outlines the progress made on the project, including the implementation of the home page, user sign-up, and login functionalities.
 
+## Problem Motivation
+
+As young adults who understand the significance of financial literacy and its transformative potential, we empathise with the apprehension many harbour towards exploring the world of forex trading. Despite recognizing its potential benefits, the complexities and risks involved often deter individuals from delving into this realm. Our motivation stems from a desire to bridge this gap by making the knowledge surrounding forex trading more digestible and accessible. Drawing from our own experiences and understanding the fears and uncertainties prevalent among our peers, we are driven to create a platform that simplifies the learning process and instills confidence in those who aspire to harness the opportunities presented by the forex market.
+
+## User Stories
+
+
 ## Features
 
 ### Home Page
