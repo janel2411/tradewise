@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+# views.py
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.urls import reverse
+from .models import Profile
 
 def index(request):
     is_signed_in = request.session.pop('is_signed_in', False)
@@ -11,6 +12,7 @@ def index(request):
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from .models import Profile
 
 def signup(request):
     if request.method == "POST":
@@ -20,22 +22,19 @@ def signup(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # create a new user
         try:
             user = User.objects.create_user(username=username, email=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
             user.save()
-
-            # redirect to index after successful signup
+            
             messages.success(request, "Account created successfully. Please log in.")
             return redirect('index')
         except Exception as e:
-            messages.error(request, f"Error creating account: {str(e)}")
+            messages.error(request, "Error creating account")
             return redirect('signup')
 
     return render(request, 'signup.html')
-
 
 
 def signin(request):
