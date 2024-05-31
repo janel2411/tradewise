@@ -65,10 +65,30 @@
         <p>However, it's important to note that the astonishing $6.6 trillion includes all types of forex trading. For individual retail traders like us, the segment we're interested in is much smaller—estimated at about 3-5% of the total market, or around $200-300 billion per day.</p>
         <p>Despite its vast size, the forex market operates nearly round the clock, 24 hours a day, five days a week. It starts each day in Auckland/Wellington, progresses through major financial centers like Sydney, Tokyo, and London, and ends in New York, before starting all over again.</p>
         <p>In essence, forex is a dynamic, ever-present market that offers continuous opportunities for those looking to trade currencies, leveraging rate changes to potentially profit.</p>
+        <button id="earn-points-btn" class="btn btn-primary mt-3">Complete Lesson and Earn 100 Points</button>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <script>
+        $(document).ready(function(){
+            $('#earn-points-btn').click(function(){
+                $.ajax({
+                    url: '{% url "updatepoints" %}',
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('You have earned 100 points! Total points: ' + response.points);
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

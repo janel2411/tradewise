@@ -75,3 +75,14 @@ def lesson3(request):
 
 def lesson4(request):
     return render(request, 'lesson4.html')
+
+from django.http import JsonResponse
+from .models import Profile
+
+def updatepoints(request):
+    if request.method == 'POST':
+        profile = Profile.objects.get(user=request.user)
+        profile.points += 100
+        profile.save()
+        return JsonResponse({'success': True, 'points': profile.points})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
