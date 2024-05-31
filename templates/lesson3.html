@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3 - TradeWise</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            margin-bottom: 30px;
+        }
+        .content-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .content-container h1 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+        .content-container p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        .content-container ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .content-container ul li {
+            margin-bottom: 10px;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TradeWise</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signout/">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container content-container">
+        <h1>Lesson 3: When can you trade Forex?</h1>
+        <p>Forex trading occurs across different time zones globally, making the market open 24 hours a day. However, this doesn't mean that it's active and profitable all the time. Beginners often misunderstand this, leading them to trade during low-activity periods.</p>
+        
+        <h2>Best Times to Trade</h2>
+        <p>There are specific times when forex market activity and liquidity peak. These are typically when major trading sessions overlap, leading to increased transaction flows and notable currency fluctuations.</p>
+        
+        <h3>Key Trading Times</h3>
+        <ul>
+            <li><strong>Market Hours Section:</strong> Utilize the Trading Hours Tracker to check the opening and closing times of the forex market in London, New York, Sydney, and Tokyo. Your time zone is adjusted automatically, accounting for national bank holidays and weekends.</li>
+            <li><strong>Best Market Hours of the Day:</strong> The most active trading sessions are in London and New York. The highest market liquidity occurs when these sessions overlap, as both continents are actively trading with each other, creating significant currency price fluctuations and opportunities for gains.</li>
+        </ul>
+
+        <h3>Session Overlaps:</h3>
+        <ul>
+            <li><strong>London/New York Overlap:</strong> This is the most important and active overlap, where substantial market movements occur.</li>
+            <li><strong>London/Tokyo Overlap:</strong> The opening of the London session overlaps with the end of the Tokyo session, creating another active trading period.</li>
+            <li><strong>Sydney/Tokyo Overlap:</strong> Although less liquid than the London/New York overlap, this period is still significant, especially for traders in different time zones.</li>
+        </ul>
+
+        <h3>Best Days of the Week:</h3>
+        <ul>
+            <li><strong>Most Active Days:</strong> Tuesday to Thursday are the most productive days for trading.</li>
+            <li><strong>Fridays:</strong> Active only during the first half of the day; the last hours can be chaotic and harder to predict.</li>
+            <li><strong>Mondays:</strong> Typically slower as businesses are coming back from the weekend.</li>
+        </ul>
+
+        <h3>3 Golden Nuggets of Forex Timing</h3>
+        <ul>
+            <li><strong>Busiest Session:</strong> The London session is the busiest, with 30% of all trades occurring during this time.</li>
+            <li><strong>Session Overlapping:</strong> The best hours for trading are during the overlaps of major sessions, particularly the London/New York overlap.</li>
+            <li><strong>Most Active Days:</strong> The peak activity days are from Tuesday to Thursday.</li>
+        </ul>
+        
+        <button id="earn-points-btn" class="btn btn-custom mt-3">Complete Lesson and Earn 100 Points</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#earn-points-btn').click(function(){
+                $.ajax({
+                    url: '{% url "updatepoints" %}',
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('You have earned 100 points! Total points: ' + response.points);
+                            $('#earn-points-btn').prop('disabled', true);
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

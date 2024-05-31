@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2 - TradeWise</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            margin-bottom: 30px;
+        }
+        .content-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .content-container h1 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+        .content-container p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        .content-container ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .content-container ul li {
+            margin-bottom: 10px;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TradeWise</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signout/">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container content-container">
+        <h1>Lesson 2: How Forex Trading Works</h1>
+        <p>In forex trading, the core strategy involves buying a currency at a low price and selling it at a higher price. If you anticipate that the price of a currency will rise, you would "go long" by clicking buy. Conversely, if you expect it to fall, you would "go short" by clicking sell.</p>
+        <p><strong>Going Long:</strong> This process is straightforward. You buy a currency at a lower price with the expectation that its value will increase.</p>
+        <p><strong>Going Short:</strong> Short selling is more complex but facilitated by automated trading systems. Here's how it works:</p>
+        <ul>
+            <li>The broker lends you the currency you intend to sell.</li>
+            <li>You sell the currency. If its price falls, you can buy it back at a lower price.</li>
+            <li>You return the borrowed currency to the broker and profit from the price difference.</li>
+        </ul>
+        <p>All these steps are executed with the simple push of a button, thanks to modern trading platforms.</p>
+        <p><strong>What is Being Traded in Forex?</strong></p>
+        <p>Trading in forex is not just about exchanging money; it’s about trading the economies of entire countries. For instance, when you buy British pounds with U.S. dollars, you're effectively investing in the British economy over the U.S. economy. The price of a currency reflects the market’s view on the current and future health of its economy relative to others. This makes forex trading both significant and insightful as it involves predictions and insights into global economic performances.</p>
+        <button id="earn-points-btn" class="btn btn-custom mt-3">Complete Lesson and Earn 100 Points</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#earn-points-btn').click(function(){
+                $.ajax({
+                    url: '{% url "updatepoints" %}',
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('You have earned 100 points! Total points: ' + response.points);
+                            $('#earn-points-btn').prop('disabled', true);
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

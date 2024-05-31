@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 4 - TradeWise</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            margin-bottom: 30px;
+        }
+        .content-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .content-container h1 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+        .content-container h2 {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-top: 20px;
+        }
+        .content-container p, .content-container ul {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        .content-container ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+        .content-container ul li {
+            margin-bottom: 10px;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TradeWise</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signout/">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container content-container">
+        <h1>Lesson 4: Don’t Make these Mistakes as a Beginner Trader</h1>
+        <p>We asked top-performing traders to share one mistake they made early in their careers that they have since learned from and will never repeat. Here are their insights into seven critical mistakes every trader should avoid:</p>
+        
+        <h2>1. Not Cutting Losses Quickly</h2>
+        <p><span class="highlight">Mistake:</span> Holding onto losing trades in the hope they will turn around.<br>
+           <span class="highlight">Solution:</span> Set a predetermined loss limit before entering a trade and stick to it. Accepting losses as part of trading is crucial. Avoid letting emotions dictate your decisions.
+        </p>
+
+        <h2>2. Averaging Losers</h2>
+        <p><span class="highlight">Mistake:</span> Adding to a losing position in the hope of reducing the average cost.<br>
+           <span class="highlight">Solution:</span> Avoid adding to losing trades. Cut your losses and move on. Averaging down can work in long-term investing but is risky in day trading.
+        </p>
+
+        <h2>3. Not Taking Spreads into Account</h2>
+        <p><span class="highlight">Mistake:</span> Ignoring the impact of spread fees on trade profitability.<br>
+           <span class="highlight">Solution:</span> Always consider the spread when entering a trade. Over time, spreads can significantly eat into profits, especially for frequent traders.
+        </p>
+
+        <h2>4. Swinging for the Fences</h2>
+        <p><span class="highlight">Mistake:</span> Putting too much of the account’s value into single trades, aiming for huge profits.<br>
+           <span class="highlight">Solution:</span> Limit each trade to a small percentage (1-4%) of your account. This way, you can withstand multiple losses without wiping out your account.
+        </p>
+
+        <h2>5. Indicator Overload</h2>
+        <p><span class="highlight">Mistake:</span> Using too many indicators, leading to analysis paralysis.<br>
+           <span class="highlight">Solution:</span> Keep it simple. Focus on the trend and critical price levels, using a few reliable indicators.
+        </p>
+
+        <h2>6. Ignoring the Context in Technical Analysis</h2>
+        <p><span class="highlight">Mistake:</span> Relying solely on technical analysis without considering economic and political factors.<br>
+           <span class="highlight">Solution:</span> Incorporate fundamental analysis to understand the broader market context. Stay informed about major economic and political events.
+        </p>
+
+        <h2>7. Trading Against the Primary Trend</h2>
+        <p><span class="highlight">Mistake:</span> Trying to pick tops and bottoms, trading against the main market trend.<br>
+           <span class="highlight">Solution:</span> Always check higher time frames to identify the primary trend before making trades on shorter time frames. The trend is your friend.
+        </p>
+
+        <button id="earn-points-btn" class="btn btn-custom mt-3">Complete Lesson and Earn 100 Points</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#earn-points-btn').click(function(){
+                $.ajax({
+                    url: '{% url "updatepoints" %}',
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('You have earned 100 points! Total points: ' + response.points);
+                            $('#earn-points-btn').prop('disabled', true);
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

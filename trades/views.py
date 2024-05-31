@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from .models import Profile
 
 def index(request):
@@ -26,8 +26,7 @@ def signup(request):
             user = User.objects.create_user(username=username, email=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
-            user.save()
-            
+            user.save()         
             messages.success(request, "Account created successfully. Please log in.")
             return redirect('index')
         except Exception as e:
@@ -56,10 +55,12 @@ def signin(request):
     return render(request, 'signin.html')
 
 def signout(request):
-    return render(request, 'signout.html')
+    logout(request)
+    messages.success(request,"Logged Out Successfully.")
+    return redirect('index')
 
 def dashboard(request):
-    # Ensure user is authenticated before showing the dashboard
+    # ensure user is authenticated first
     if not request.user.is_authenticated:
         return redirect('signin')
     return render(request, 'dashboard.html')
@@ -86,3 +87,4 @@ def updatepoints(request):
         profile.save()
         return JsonResponse({'success': True, 'points': profile.points})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
+

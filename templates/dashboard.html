@@ -98,7 +98,7 @@
                     <a class="nav-link" href="#">Forum</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sign Out</a>
+                    <a class="nav-link" href="{% url 'signout' %}">Sign Out</a>
                 </li>
             </ul>
         </div>
@@ -132,9 +132,10 @@
             <h3>Chapter Outline</h3>
             <ul class="outline-list">
                 <li><a href="{% url 'lesson1' %}">What is Forex?</a></li>
-                <li><a href="#">Why trade Forex?</a></li>
-                <li><a href="#">How to trade Forex?</a></li>
-                <li><a href="#">When should you trade?</a></li>
+                <li><a href="{% url 'lesson2' %}">How Forex Trading works</a></li>
+                <li><a href="{% url 'lesson3' %}">When can you trade Forex?</a></li>
+                <li><a href="{% url 'lesson4' %}">Don’t Make these Mistakes as a Beginner Trader
+                </a></li>
             </ul>
         </div>
     </div>
