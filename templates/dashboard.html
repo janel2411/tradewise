@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - TradeWise</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/lux/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .container-main {
+            margin-top: 20px;
+        }
+        .chapter-section {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .chapter-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .chapter-section p {
+            font-size: 1rem;
+        }
+        .chapter-section .btn {
+            margin-top: 10px;
+        }
+        .progress-section, .outline-section {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .progress-section h3, .outline-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+        .progress-bar {
+            height: 20px;
+            width: 100%;
+        }
+        .outline-list {
+            list-style: none;
+            padding-left: 0;
+            text-align: left;
+        }
+        .outline-list li {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        .outline-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: black;
+            font-size: 1.25rem;
+        }
+        .no-space {
+            margin: 0;
+            padding: 0;
+        }
+        .chapter-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-top: 40px;
+        }
+        .chapter-container > div {
+            flex: 1;
+            margin: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TradeWise</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Learn Forex Trading <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Trading Hours Tracker</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Market News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container text-center container-main">
+        <h1>WELCOME TO TRADEWISE</h1>
+        <p>Your path to forex mastery starts today.</p>
+    </div>
+
+    <div class="container text-center chapter-section">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>CHAPTER 1</h2>
+                <p>Completely clueless about forex and feeling overwhelmed? Here's a comprehensive introduction to the foreign exchange market.</p>
+                <a href="{% url 'lesson1' %}" class="btn btn-success">Start Chapter</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center no-space chapter-container">
+        <div class="progress-section">
+            <h3>Your Progress</h3>
+            <div class="progress" style="height: 30px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    1 out of 4 lessons completed
+                </div>
+            </div>
+        </div>
+        <div class="outline-section">
+            <h3>Chapter Outline</h3>
+            <ul class="outline-list">
+                <li><a href="{% url 'lesson1' %}">What is Forex?</a></li>
+                <li><a href="#">Why trade Forex?</a></li>
+                <li><a href="#">How to trade Forex?</a></li>
+                <li><a href="#">When should you trade?</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

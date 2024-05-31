@@ -8,24 +8,26 @@ def index(request):
     is_signed_in = request.session.pop('is_signed_in', False)
     return render(request, 'index.html', {'is_signed_in': is_signed_in})
 
-from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.shortcuts import render, redirect
 
 def signup(request):
     if request.method == "POST":
-        name = request.POST.get('name')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # Create a new user
+        # create a new user
         try:
             user = User.objects.create_user(username=username, email=email, password=password)
-            user.first_name = name
+            user.first_name = first_name
+            user.last_name = last_name
             user.save()
 
-            # Redirect to index page after successful signup
+            # redirect to index after successful signup
             messages.success(request, "Account created successfully. Please log in.")
             return redirect('index')
         except Exception as e:
@@ -33,6 +35,8 @@ def signup(request):
             return redirect('signup')
 
     return render(request, 'signup.html')
+
+
 
 def signin(request):
     if request.method == "POST":
@@ -55,3 +59,20 @@ def signin(request):
 def signout(request):
     return render(request, 'signout.html')
 
+def dashboard(request):
+    # Ensure user is authenticated before showing the dashboard
+    if not request.user.is_authenticated:
+        return redirect('signin')
+    return render(request, 'dashboard.html')
+
+def lesson1(request):
+    return render(request, 'lesson1.html')
+
+def lesson2(request):
+    return render(request, 'lesson2.html')
+
+def lesson3(request):
+    return render(request, 'lesson3.html')
+
+def lesson4(request):
+    return render(request, 'lesson4.html')
