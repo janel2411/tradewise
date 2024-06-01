@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, signup, signin, signout, dashboard, lesson1, lesson2, lesson3, lesson4,updatepoints,quiz
+from .views import index, signup, signin, signout, dashboard, lesson1, lesson2, lesson3, lesson4,updatepoints, react_app
 
 urlpatterns = [
     path('', index, name='index'),
@@ -12,5 +12,6 @@ urlpatterns = [
     path('lesson3/', lesson3, name='lesson3'),
     path('lesson4/', lesson4, name='lesson4'),
     path('updatepoints/', updatepoints, name='updatepoints'),
+    path('quiz/', react_app, name='react_app'),
 
 ]

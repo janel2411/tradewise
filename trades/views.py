@@ -88,3 +88,7 @@ def updatepoints(request):
         return JsonResponse({'success': True, 'points': profile.points})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+from django.shortcuts import render
+
+def react_app(request):
+    return render(request, 'quiz.html')
