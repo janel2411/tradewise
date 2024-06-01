@@ -47,10 +47,10 @@ def signin(request):
             login(request, user)
             messages.success(request, "Welcome to TradeWise")
             request.session['is_signed_in'] = True
-            return redirect('index')  # Redirect to the index view
+            return redirect('index')  #redirect to index page
         else:
             messages.error(request, "Bad Credentials!")
-            return redirect('signin')  # Redirect to signin page again on failure
+            return redirect('signin')  #redirect to signin page again on failure
 
     return render(request, 'signin.html')
 
@@ -60,7 +60,7 @@ def signout(request):
     return redirect('index')
 
 def dashboard(request):
-    # ensure user is authenticated first
+    #make sure user is authenticated first
     if not request.user.is_authenticated:
         return redirect('signin')
     return render(request, 'dashboard.html')
