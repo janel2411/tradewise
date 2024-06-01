@@ -12,7 +12,7 @@
             padding-bottom: 0.5rem;
         }
         .container-main {
-            margin-top: 20px;
+            margin-top: 30px;
         }
         .chapter-section {
             text-align: center;
@@ -75,6 +75,10 @@
             flex: 1;
             margin: 0 20px;
         }
+        .logo {
+            width: 100px; 
+            height: auto; 
+        }
     </style>
 </head>
 <body>
@@ -86,7 +90,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Learn Forex Trading <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'dashboard' %}">Learn Forex Trading <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Quiz Yourself <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Trading Hours Tracker</a>
@@ -106,9 +113,10 @@
 
     <div class="container text-center container-main">
         <h1>WELCOME TO TRADEWISE</h1>
-        <p>Your path to forex mastery starts today.</p>
+        <img src="/static/images/bullnbear.png" alt="Bull and Bear Market" class="logo">
+        <p> <strong>Your path to forex mastery starts today.</strong> </p>
     </div>
-
+    
     <div class="container text-center chapter-section">
         <div class="row">
             <div class="col-md-12">
@@ -134,8 +142,7 @@
                 <li><a href="{% url 'lesson1' %}">What is Forex?</a></li>
                 <li><a href="{% url 'lesson2' %}">How Forex Trading works</a></li>
                 <li><a href="{% url 'lesson3' %}">When can you trade Forex?</a></li>
-                <li><a href="{% url 'lesson4' %}">Don’t Make these Mistakes as a Beginner Trader
-                </a></li>
+                <li><a href="{% url 'lesson4' %}">Don’t Make these Mistakes as a Beginner Trader</a></li>
             </ul>
         </div>
     </div>
