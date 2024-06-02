@@ -49,8 +49,8 @@ def signin(request):
             request.session['is_signed_in'] = True
             return redirect('index')  #redirect to index page
         else:
-            messages.error(request, "Bad Credentials!")
-            return redirect('signin')  #redirect to signin page again on failure
+            messages.error(request, "Bad Credentials! Log In Again.")
+            return redirect('index') #prompted to sign in again if key in wrong pw/username
 
     return render(request, 'signin.html')
 
@@ -92,3 +92,6 @@ from django.shortcuts import render
 
 def react_app(request):
     return render(request, 'quiz.html')
+
+def quizhomepage(request):
+    return render(request, 'quizhomepage.html')

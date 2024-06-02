@@ -14,53 +14,7 @@
         .container-main {
             margin-top: 30px;
         }
-        .chapter-section {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .chapter-section h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .chapter-section p {
-            font-size: 1rem;
-        }
-        .chapter-section .btn {
-            margin-top: 10px;
-        }
-        .progress-section, .outline-section {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .progress-section h3, .outline-section h3 {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
-        }
-        .progress-bar {
-            height: 20px;
-            width: 100%;
-        }
-        .outline-list {
-            list-style: none;
-            padding-left: 0;
-            text-align: left;
-        }
-        .outline-list li {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 20px;
-        }
-        .outline-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: black;
-            font-size: 1.25rem;
-        }
+        
         .no-space {
             margin: 0;
             padding: 0;
@@ -78,6 +32,23 @@
         .logo {
             width: 100px; 
             height: auto; 
+        }
+        .card-custom {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-custom img {
+            width: 30%; 
+            height: auto;
+            margin: auto;
+            display: block;
+        }
+        .card-custom h2 {
+            font-size: 1.5rem;
+        }
+        .card-custom a.btn {
+            padding: 10px 20px;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -115,36 +86,20 @@
     <div class="container text-center container-main">
         <h1>WELCOME TO TRADEWISE</h1>
         <img src="/static/images/bullnbear.png" alt="Bull and Bear Market" class="logo">
-        <p> <strong>Your path to forex mastery starts today.</strong> </p>
+        <p> <strong>Quiz Yourself In a Risk Free Environment.</strong> </p>
     </div>
     
     <div class="container text-center chapter-section">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>CHAPTER 1</h2>
-                <p>Completely clueless about forex and feeling overwhelmed? Here's a comprehensive introduction to the foreign exchange market.</p>
-                <a href="{% url 'lesson1' %}" class="btn btn-success">Start Chapter</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container text-center no-space chapter-container">
-        <div class="progress-section">
-            <h3>Your Progress</h3>
-            <div class="progress" style="height: 30px;">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                    1 out of 4 lessons completed
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card card-custom">
+                    <img src="/static/images/chapter1quiz.png" alt="Quiz 1" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="card-title">CHAPTER 1 QUIZ</h2>
+                        <a href="{% url 'react_app' %}" class="btn btn-success">Start Chapter</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="outline-section">
-            <h3>Chapter Outline</h3>
-            <ul class="outline-list">
-                <li><a href="{% url 'lesson1' %}">What is Forex?</a></li>
-                <li><a href="{% url 'lesson2' %}">How Forex Trading works</a></li>
-                <li><a href="{% url 'lesson3' %}">When can you trade Forex?</a></li>
-                <li><a href="{% url 'lesson4' %}">Don’t Make these Mistakes as a Beginner Trader</a></li>
-            </ul>
         </div>
     </div>
 
