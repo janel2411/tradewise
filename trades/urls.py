@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, signup, signin, signout, dashboard, lesson1, lesson2, lesson3, lesson4,updatepoints, react_app, quizhomepage
+from .views import *
 
 urlpatterns = [
     path('', index, name='index'),
@@ -14,5 +14,8 @@ urlpatterns = [
     path('updatepoints/', updatepoints, name='updatepoints'),
     path('quiz/', react_app, name='react_app'),
     path('quizhomepage/',quizhomepage,name = "quizhomepage"),
+    path('forum/', post_list, name='post_list'),
+    path('forum/post/<int:pk>/', post_detail, name='post_detail'),
+    path('forum/post/new/', post_new, name='post_new'),
 
 ]
