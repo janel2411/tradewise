@@ -101,7 +101,7 @@ def quizhomepage(request):
 
 def post_list(request):
     posts = Post.objects.all()
-    return render(request, 'forum/post_list.html', {'posts': posts})
+    return render(request, 'post_list.html', {'posts': posts})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -116,7 +116,7 @@ def post_detail(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         comment_form = CommentForm()
-    return render(request, 'forum/post_detail.html', {'post': post, 'comments': comments, 'comment_form': comment_form})
+    return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'comment_form': comment_form})
 
 @login_required
 def post_new(request):
@@ -129,4 +129,4 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'forum/post_edit.html', {'form': form})
+    return render(request, 'post_edit.html', {'form': form})
