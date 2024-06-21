@@ -82,11 +82,18 @@
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.close-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
-                    window.location.href = '{% url "dashboard" %}'; 
+                    const alertDiv = btn.closest('.alert');
+                    const message = alertDiv.innerText.trim();
+                    let redirectUrl = "{% url 'index' %}";
+
+                    if (message.includes('Welcome to TradeWise')) {
+                        redirectUrl = "{% url 'dashboard' %}";
+                    }
+
+                    window.location.href = redirectUrl;
                 });
             });
         });
     </script>
 </body>
 </html>
-
