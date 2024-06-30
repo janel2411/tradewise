@@ -149,7 +149,6 @@ def post_new(request):
     categories = Category.objects.all()
     return render(request, 'post_edit.html', {'form': form, 'categories': categories, 'post': None})
 
-# View to edit an existing post
 @login_required
 def edit_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -162,6 +161,7 @@ def edit_post(request, post_id):
         form = PostForm(instance=post)
     categories = Category.objects.all()
     return render(request, 'post_edit.html', {'form': form, 'categories': categories, 'post': post})
+
 
 # View to add a new comment
 @login_required
@@ -195,3 +195,7 @@ def add_reply(request, comment_id):
     return render(request, 'post_detail.html', {'post': post, 'reply_form': reply_form, 'comment': comment})
 
 
+def leaderboard(request):
+    # fetch top 3 users by points
+    top_users = User.objects.all().order_by('-points')[:3]
+    return render(request, 'leaderboard.html', {'top_users': top_users})

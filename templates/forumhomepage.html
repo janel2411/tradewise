@@ -35,6 +35,9 @@
             font-size: 1rem;
             color: #666;
         }
+        .create-post-button {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -68,7 +71,10 @@
     </nav>
 
     <div class="container container-main">
-        <h1 class="mb-4">Forum Categories</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Forum Categories</h1>
+            <a href="{% url 'post_new' %}" class="btn btn-primary create-post-button">Create New Post</a>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 {% for category in categories %}
