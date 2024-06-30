@@ -21,4 +21,5 @@ urlpatterns = [
     path('forum/post/edit/<int:post_id>/', edit_post, name='edit_post'),
     path('forum/post/<int:post_id>/add_comment/', add_comment, name='add_comment'),
     path('forum/comment/<int:comment_id>/add_reply/', add_reply, name='add_reply'),
+    path('leaderboard/', leaderboard, name='leaderboard'),
 ]

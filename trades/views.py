@@ -194,4 +194,7 @@ def add_reply(request, comment_id):
         reply_form = ReplyForm()
     return render(request, 'post_detail.html', {'post': post, 'reply_form': reply_form, 'comment': comment})
 
-
+#need to get my top 3 users in terms of points
+def leaderboard(request):
+    top_users = Profile.objects.all().order_by('-points')[:3]
+    return render(request, 'leaderboard.html', {'top_users': top_users})

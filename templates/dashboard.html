@@ -13,10 +13,11 @@
         }
         .container-main {
             margin-top: 30px;
+            text-align: center;
         }
         .chapter-section {
+            margin-top: 30px;
             text-align: center;
-            margin-top: 10px;
         }
         .chapter-section h2 {
             font-size: 1.5rem;
@@ -29,7 +30,7 @@
             margin-top: 10px;
         }
         .progress-section, .outline-section {
-            margin-top: 20px;
+            margin-top: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -39,7 +40,7 @@
             margin-bottom: 10px;
         }
         .progress-bar {
-            height: 20px;
+            height: 30px;
             width: 100%;
         }
         .outline-list {
@@ -60,10 +61,6 @@
             top: 0;
             color: black;
             font-size: 1.25rem;
-        }
-        .no-space {
-            margin: 0;
-            padding: 0;
         }
         .chapter-container {
             display: flex;
@@ -110,28 +107,24 @@
             </ul>
         </div>
     </nav>
-    <!-- navigation bar code -->
 
-    <div class="container text-center container-main">
+    <div class="container container-main">
         <h1>WELCOME TO TRADEWISE</h1>
         <img src="/static/images/bullnbear.png" alt="Bull and Bear Market" class="logo">
-        <p> <strong>Your path to forex mastery starts today.</strong> </p>
+        <p><strong>Your path to forex mastery starts today.</strong></p>
+        <a href="{% url 'leaderboard' %}" class="btn btn-primary mt-3">View Leaderboard</a>
     </div>
     
-    <div class="container text-center chapter-section">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>CHAPTER 1</h2>
-                <p>Completely clueless about forex and feeling overwhelmed? Here's a comprehensive introduction to the foreign exchange market.</p>
-                <a href="{% url 'lesson1' %}" class="btn btn-success">Start Chapter</a>
-            </div>
-        </div>
+    <div class="container chapter-section">
+        <h2>CHAPTER 1</h2>
+        <p>Completely clueless about forex and feeling overwhelmed? Here's a comprehensive introduction to the foreign exchange market.</p>
+        <a href="{% url 'lesson1' %}" class="btn btn-success">Start Chapter</a>
     </div>
 
-    <div class="container text-center no-space chapter-container">
+    <div class="container chapter-container">
         <div class="progress-section">
             <h3>Your Progress</h3>
-            <div class="progress" style="height: 30px;">
+            <div class="progress">
                 <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                     1 out of 4 lessons completed
                 </div>
