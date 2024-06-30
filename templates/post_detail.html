@@ -1,94 +1,123 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lesson 1 - TradeWise</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-            body {
-                background-color: #f8f9fa;
-                font-family: 'Arial', sans-serif;
-            }
-            .navbar {
-                margin-bottom: 30px;
-            }
-            .content-container {
-                background-color: #fff;
-                padding: 40px;
-                border-radius: 10px;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-                max-width: 800px;
-                margin: auto;
-            }
-            .content-container h1 {
-                margin-bottom: 30px;
-                font-size: 2.5rem;
-                color: #343a40;
-            }
-            .content-container p {
-                font-size: 1.2rem;
-                line-height: 1.8;
-                color: #495057;
-            }
-            .content-container ul {
-                list-style-type: disc;
-                margin-left: 20px;
-            }
-            .content-container ul li {
-                margin-bottom: 10px;
-                font-size: 1.2rem;
-                line-height: 1.6;
-                color: #495057;
-            }
-            #earn-points-btn {
-                background-color: #28a745;
-                border: none;
-            }
-            #earn-points-btn:hover {
-                background-color: #218838;
-            }
-        </style>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">TradeWise</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard/">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/signout/">Sign Out</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} - TradeWise</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/lux/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .container-main {
+            margin-top: 30px;
+        }
+        .content-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .comment-container {
+            margin-top: 30px;
+        }
+        .comment {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #e3e3e3;
+            border-radius: 5px;
+        }
+        .reply {
+            margin-left: 40px;
+        }
+        .reply-button {
+            margin-left: 10px;
+        }
+        .comment-form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <body>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
-    <p>by {{ post.author }} on {{ post.created_at }}</p>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TradeWise</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">Learn Forex Trading</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quizhomepage' %}">Quiz Yourself</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Trading Hours Tracker</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Market News</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'forumhomepage' %}">Forum <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signout' %}">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <h2>Comments</h2>
-    <ul>
-        {% for comment in comments %}
-            <li>{{ comment.content }} by {{ comment.author }} on {{ comment.created_at }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container container-main">
+        <div class="content-container">
+            <h1>{{ post.title }}</h1>
+            <p><small>By {{ post.author.username }} on {{ post.created_at|date:"F j, Y, g:i a" }}</small></p>
+            <p>{{ post.content }}</p>
+        </div>
 
-    <h2>Add a comment</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <button type="submit">Add comment</button>
-    </form>
+        <div class="comment-container">
+            <h3>Comments</h3>
+            {% for comment in comments %}
+                <div class="comment">
+                    <p><strong>{{ comment.author.username }}</strong> on {{ comment.created_at|date:"F j, Y, g:i a" }}</p>
+                    <p>{{ comment.content }}</p>
+                    <button class="btn btn-link reply-button" data-toggle="collapse" data-target="#reply{{ comment.id }}">Reply</button>
+                    <div id="reply{{ comment.id }}" class="collapse">
+                        <form method="post" action="{% url 'add_reply' comment.id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea class="form-control" name="content" rows="2" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    {% for reply in comment.replies.all %}
+                        <div class="comment reply">
+                            <p><strong>{{ reply.author.username }}</strong> on {{ reply.created_at|date:"F j, Y, g:i a" }}</p>
+                            <p>{{ reply.content }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
 
-    <a href="{% url 'post_list' %}">Back to posts</a>
+        <div class="comment-form">
+            <h3>Leave a Comment</h3>
+            <form method="post" action="{% url 'post_detail' post.pk %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control" name="content" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

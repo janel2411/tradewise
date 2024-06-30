@@ -13,9 +13,12 @@ urlpatterns = [
     path('lesson4/', lesson4, name='lesson4'),
     path('updatepoints/', updatepoints, name='updatepoints'),
     path('quiz/', react_app, name='react_app'),
-    path('quizhomepage/',quizhomepage,name = "quizhomepage"),
-    path('forum/', post_list, name='post_list'),
+    path('quizhomepage/', quizhomepage, name='quizhomepage'),
+    path('forum/', forumhomepage, name='forumhomepage'),
+    path('forum/category/<int:category_id>/', category_detail, name='category_detail'),
     path('forum/post/<int:pk>/', post_detail, name='post_detail'),
     path('forum/post/new/', post_new, name='post_new'),
-
+    path('forum/post/edit/<int:post_id>/', edit_post, name='edit_post'),
+    path('forum/post/<int:post_id>/add_comment/', add_comment, name='add_comment'),
+    path('forum/comment/<int:comment_id>/add_reply/', add_reply, name='add_reply'),
 ]

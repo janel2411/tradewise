@@ -1,0 +1,26 @@
+[
+    {
+        "model": "trades.category",
+        "pk": 1,
+        "fields": {
+            "name": "Introduce Yourself",
+            "description": "Hi! Welcome to our forum. Before you dive into your questions, we would like to get to know you better. Share with us where you're from, your trading background if any, and why you've decided to join the best forex community."
+        }
+    },
+    {
+        "model": "trades.category",
+        "pk": 2,
+        "fields": {
+            "name": "Beginner Questions",
+            "description": "This forum has been created specially for our complete forex newbies. This is the best place to seek all of your answers and to meet fellow beginner traders."
+        }
+    },
+    {
+        "model": "trades.category",
+        "pk": 3,
+        "fields": {
+            "name": "News and Economy",
+            "description": "This forum has been created for those who want to keep tabs on relevant economic trends and to discuss its impacts."
+        }
+    }
+]

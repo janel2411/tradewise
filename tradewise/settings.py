@@ -79,26 +79,27 @@ WSGI_APPLICATION = 'tradewise.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-import certifi
+
 import ssl
+import certifi
 
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'tradewise_db',
+        'NAME': 'tradewise_db',  
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb+srv://e1156808:OZ9wM6NhvmzElqCO@tradewisecluster.itzxyju.mongodb.net/',
-            'port': 27017,
+            'host': 'mongodb+srv://e1156808:OZ9wM6NhvmzElqCO@tradewisecluster.itzxyju.mongodb.net/tradewise_db',  
             'username': 'e1156808',
             'password': 'OZ9wM6NhvmzElqCO',
+            'authSource': 'admin',  # Ensure the authentication database is set correctly
             'authMechanism': 'SCRAM-SHA-1',
             'ssl': True,
-            'ssl_cert_reqs': ssl.CERT_NONE,
             'tlsCAFile': certifi.where(),
         }
     }
 }
+
 
 
 # Password validation

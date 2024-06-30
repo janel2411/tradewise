@@ -99,34 +99,99 @@ def react_app(request):
 def quizhomepage(request):
     return render(request, 'quizhomepage.html')
 
-def post_list(request):
-    posts = Post.objects.all()
-    return render(request, 'post_list.html', {'posts': posts})
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Post, Category, Comment, Profile
+from .forms import PostForm, CommentForm, ReplyForm
 
+# Home page for the forum
+def forumhomepage(request):
+    categories = Category.objects.all()
+    return render(request, 'forumhomepage.html', {'categories': categories})
+
+# View for category detail which lists posts in that category
+def category_detail(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    posts = Post.objects.filter(category=category).order_by('-created_at')
+    return render(request, 'category_detail.html', {'category': category, 'posts': posts})
+
+# View for post detail which shows the post and its comments
+@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    comments = post.comments.all()
+    comments = post.comments.filter(parent=None).order_by('-created_at')
+
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.post = post
-            comment.author = request.user
+            comment.author = request.user.profile
             comment.save()
             return redirect('post_detail', pk=post.pk)
     else:
         comment_form = CommentForm()
+
     return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'comment_form': comment_form})
 
+# View to create a new post
 @login_required
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
+            post.author = request.user.profile
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'post_edit.html', {'form': form})
+    categories = Category.objects.all()
+    return render(request, 'post_edit.html', {'form': form, 'categories': categories, 'post': None})
+
+# View to edit an existing post
+@login_required
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm(instance=post)
+    categories = Category.objects.all()
+    return render(request, 'post_edit.html', {'form': form, 'categories': categories, 'post': post})
+
+# View to add a new comment
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user.profile
+            comment.save()
+            return redirect('post_detail', pk=post.pk)
+    return redirect('post_detail', pk=post.pk)
+
+# View to add a reply to an existing comment
+@login_required
+def add_reply(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    post = comment.post
+    if request.method == 'POST':
+        reply_form = ReplyForm(request.POST)
+        if reply_form.is_valid():
+            reply = reply_form.save(commit=False)
+            reply.comment = comment
+            reply.author = request.user.profile
+            reply.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        reply_form = ReplyForm()
+    return render(request, 'post_detail.html', {'post': post, 'reply_form': reply_form, 'comment': comment})
+
+
