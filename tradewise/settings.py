@@ -80,25 +80,33 @@ WSGI_APPLICATION = 'tradewise.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-import ssl
+import os
 import certifi
 
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'tradewise_db',  
+        'NAME': os.environ.get('DB_NAME', 'tradewise_db'),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb+srv://e1156808:OZ9wM6NhvmzElqCO@tradewisecluster.itzxyju.mongodb.net/tradewise_db',  
-            'username': 'e1156808',
-            'password': 'OZ9wM6NhvmzElqCO',
-            'authSource': 'admin',  # Ensure the authentication database is set correctly
+            'host': os.environ.get('MONGODB_URI', 'mongodb+srv://e1156808:OZ9wM6NhvmzElqCO@tradewisecluster.itzxyju.mongodb.net/tradewise_db'),
+            'username': os.environ.get('DB_USERNAME', 'e1156808'),
+            'password': os.environ.get('DB_PASSWORD', 'OZ9wM6NhvmzElqCO'),
+            'authSource': 'admin',
             'authMechanism': 'SCRAM-SHA-1',
             'ssl': True,
             'tlsCAFile': certifi.where(),
         }
     }
 }
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
+ALLOWED_HOSTS = ['*']
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 
