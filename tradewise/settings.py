@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2xnw0hauslq6zhke#%q-shun@jvhpguvuff#=%@pdgf__z1a98
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -154,4 +154,3 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-ALLOWED_HOSTS = ['tradewise.onrender.com', 'https://tradewise.onrender.com']
