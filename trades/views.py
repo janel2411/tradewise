@@ -198,3 +198,15 @@ def add_reply(request, comment_id):
 def leaderboard(request):
     top_users = Profile.objects.all().order_by('-points')[:3]
     return render(request, 'leaderboard.html', {'top_users': top_users})
+
+#for my react tracker
+from rest_framework import viewsets
+from .models import TradingSession
+from .serializers import TradingSessionSerializer
+
+class TradingSessionViewSet(viewsets.ModelViewSet):
+    queryset = TradingSession.objects.all()
+    serializer_class = TradingSessionSerializer
+
+def tracker(request):
+    return render(request, 'tracker.html')

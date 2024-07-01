@@ -49,3 +49,14 @@ class Reply(models.Model):
 
     def __str__(self):
         return self.content[:20]
+    
+#trading hours tracker
+
+class TradingSession(models.Model):
+    market_name = models.CharField(max_length=100)
+    open_time = models.TimeField()
+    close_time = models.TimeField()
+    timezone = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.market_name

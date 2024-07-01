@@ -1,5 +1,10 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import TradingSessionViewSet
 from .views import *
+
+router = DefaultRouter()
+router.register(r'sessions', TradingSessionViewSet)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -22,4 +27,6 @@ urlpatterns = [
     path('forum/post/<int:post_id>/add_comment/', add_comment, name='add_comment'),
     path('forum/comment/<int:comment_id>/add_reply/', add_reply, name='add_reply'),
     path('leaderboard/', leaderboard, name='leaderboard'),
+    path('api/', include(router.urls)),
+    path('tracker/', tracker, name='tracker'),
 ]
