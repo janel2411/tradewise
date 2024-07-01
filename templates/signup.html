@@ -5,16 +5,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - TradeWise</title>
-    <link rel="stylesheet" href="/static/css/signup.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Calibri', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background: white;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+            font-size: 2em;
+            margin-bottom: 1em;
+        }
+
+        label {
+            display: block;
+            font-size: 1em;
+            margin: 0.5em 0 0.2em;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.7em;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+
+        .login-link {
+            margin-top: 1em;
+        }
+
+        .login-link a {
+            color: blue;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div class="signup-container">
-        <h2>Sign Up</h2>
+    <div class="container">
+        <h1>Sign Up</h1>
         <form method="POST" action="{% url 'signup' %}">
             {% csrf_token %}
-            <label for="firstname">First Name</label>
+            <label for="first_name">First Name</label>
             <input type="text" id="first_name" name="first_name" required>
-            <label for="lastname">Last Name</label>
+            <label for="last_name">Last Name</label>
             <input type="text" id="last_name" name="last_name" required>
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
@@ -24,7 +93,9 @@
             <input type="password" id="password" name="password" required>
             <button type="submit">Sign Up</button>
         </form>
-        <p>Already have an account? <a href="{% url 'signin' %}">Sign In Here</a></p>
+        <div class="login-link">
+            <p>Already have an account? <a href="{% url 'signin' %}">Sign In Here</a></p>
+        </div>
     </div>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
