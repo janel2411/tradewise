@@ -1,16 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - TradeWise</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/lux/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .container-main {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .chapter-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .chapter-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .chapter-section p {
+            font-size: 1rem;
+        }
+        .chapter-section .btn {
+            margin-top: 10px;
+        }
+        .progress-section, .outline-section {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .progress-section h3, .outline-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+        .progress-bar {
+            height: 30px;
+            width: 100%;
+        }
+        .outline-list {
+            list-style: none;
+            padding-left: 0;
+            text-align: left;
+        }
+        .outline-list li {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        .outline-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: black;
+            font-size: 1.25rem;
+        }
+        .chapter-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-top: 40px;
+        }
+        .chapter-container > div {
+            flex: 1;
+            margin: 0 20px;
+        }
+        .logo {
+            width: 100px; 
+            height: auto; 
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TradeWise</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'dashboard' %}">Learn Forex Trading <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'quizhomepage' %}">Quiz Yourself <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Market News</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'forumhomepage' %}">Forum <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signout' %}">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>React App</title>
-    <link rel="stylesheet" href="{% static 'react_leaderboard/css/main.c7abcba8.css' %}">
+    <link rel="stylesheet" href="{% static 'react_leaderboard/css/main.c1bbdbe2.css' %}">
 </head>
 <body>
     <div id="root"></div>
     <script src="{% static 'react_leaderboard/js/453.db5098c9.chunk.js' %}"></script>
-    <script src="{% static 'react_leaderboard/js/main.7682ba68.js' %}"></script>
+    <script src="{% static 'react_leaderboard/js/main.688d6ffd.js' %}"></script>
     <script>
         window.quizHomepageUrl = "{% url 'leaderboard' %}";
     </script>
