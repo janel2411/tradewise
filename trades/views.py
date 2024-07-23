@@ -1,4 +1,3 @@
-# views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -7,17 +6,14 @@ from .models import Profile
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
+import re
+from django.core.exceptions import ValidationError
+
 
 def index(request):
     is_signed_in = request.session.pop('is_signed_in', False)
     return render(request, 'index.html', {'is_signed_in': is_signed_in})
 
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.shortcuts import render, redirect
-import re
-from django.core.exceptions import ValidationError
-from .models import Profile
 
 def validate_password(password):
     if len(password) < 8:
@@ -89,18 +85,19 @@ def signin(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Welcome to TradeWise")
-            request.session['is_signed_in'] = True
-            return redirect('index')  #redirect to index page
+            return redirect('dashboard')  # Redirect to the dashboard upon successful login
         else:
             messages.error(request, "Bad Credentials! Log In Again.")
-            return redirect('index') #prompted to sign in again if key in wrong pw/username
+            return render(request, 'index.html')  # Render the index page again with error messages
 
-    return render(request, 'signin.html')
+    return render(request, 'index.html')
+
 
 def signout(request):
     logout(request)
-    messages.success(request,"Logged Out Successfully.")
+    messages.success(request, "Logged Out Successfully.")
     return redirect('index')
+
 
 def dashboard(request):
     #make sure user is authenticated first
