@@ -146,7 +146,7 @@
             <button type="submit">Sign Up</button>
         </form>
         <div class="login-link">
-            <p>Already have an account? <a href="{% url 'signin' %}">Sign In Here</a></p>
+            <p>Already have an account? <a href="{% url 'index' %}">Sign In Here</a></p>
         </div>
     </div>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -223,7 +223,7 @@
             }
         });
 
-        // Add input event listeners for real-time validation feedback
+        // for real-time validation feedback
         document.getElementById('first_name').addEventListener('input', function() {
             const firstName = document.getElementById('first_name').value;
             const firstNameError = document.getElementById('firstNameError');
