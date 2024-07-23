@@ -231,7 +231,33 @@ def add_reply(request, comment_id):
         reply_form = ReplyForm()
     return render(request, 'post_detail.html', {'post': post, 'reply_form': reply_form, 'comment': comment})
 
-#need to get my top 3 users in terms of points
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import Profile
+
+@login_required
 def leaderboard(request):
-    top_users = Profile.objects.all().order_by('-points')[:3]
-    return render(request, 'leaderboard.html', {'top_users': top_users})
+    # Get the top 5 ranks
+    top_users = list(Profile.objects.all().order_by('-points', 'username'))
+    top_users_filtered = []
+    last_points = None
+    rank_count = 0
+
+    for user in top_users:
+        if len(top_users_filtered) < 5 or (last_points is not None and user.points == last_points):
+            top_users_filtered.append(user)
+            last_points = user.points
+            rank_count = len(top_users_filtered)
+
+    top_users_data = [{"username": user.username, "points": user.points, "first_name": user.first_name, "last_name": user.last_name} for user in top_users_filtered]
+    
+    current_user = request.user
+    current_user_profile = Profile.objects.get(user=current_user)
+    current_user_data = {
+        "username": current_user.username,
+        "points": current_user_profile.points,
+        "first_name": current_user.first_name,
+        "last_name": current_user.last_name
+    }
+    
+    return JsonResponse({"top_users": top_users_data, "current_user": current_user_data})
