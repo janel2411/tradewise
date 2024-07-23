@@ -15,7 +15,23 @@ def index(request):
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import render, redirect
+import re
+from django.core.exceptions import ValidationError
 from .models import Profile
+
+def validate_password(password):
+    if len(password) < 8:
+        raise ValidationError("Password must be at least 8 characters long.")
+    if not re.search(r"[A-Za-z]", password):
+        raise ValidationError("Password must contain at least one letter.")
+    if not re.search(r"[0-9]", password):
+        raise ValidationError("Password must contain at least one number.")
+    if not re.search(r"[!@#$%^&*]", password):
+        raise ValidationError("Password must contain at least one special character.")
+
+def validate_username(username):
+    if not re.match(r"^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+$", username):
+        raise ValidationError("Username must contain letters and numbers.")
 
 def signup(request):
     if request.method == "POST":
@@ -25,15 +41,39 @@ def signup(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        error_messages = []
+
+        # Email validation
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            error_messages.append("Invalid email address.")
+
+        # Username validation
+        try:
+            validate_username(username)
+        except ValidationError as e:
+            error_messages.append(str(e))
+
+        # Password validation
+        try:
+            validate_password(password)
+        except ValidationError as e:
+            error_messages.append(str(e))
+
+        if error_messages:
+            for message in error_messages:
+                messages.error(request, message)
+            return redirect('signup')
+
         try:
             user = User.objects.create_user(username=username, email=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
-            user.save()         
+            user.save()
+            
             messages.success(request, "Account created successfully. Please log in.")
             return redirect('index')
         except Exception as e:
-            messages.error(request, "Error creating account")
+            messages.error(request, "Error creating account: " + str(e))
             return redirect('signup')
 
     return render(request, 'signup.html')
