@@ -85,10 +85,10 @@ def signin(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Welcome to TradeWise")
-            return redirect('dashboard')  # Redirect to the dashboard upon successful login
+            return redirect('dashboard')  # Redirect to dashboard upon successful login
         else:
             messages.error(request, "Bad Credentials! Log In Again.")
-            return render(request, 'index.html')  # Render the index page again with error messages
+            return render(request, 'index.html')  # Render the index page with error messages
 
     return render(request, 'index.html')
 
