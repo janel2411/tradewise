@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', index, name='index'),
@@ -21,5 +22,6 @@ urlpatterns = [
     path('forum/post/edit/<int:post_id>/', edit_post, name='edit_post'),
     path('forum/post/<int:post_id>/add_comment/', add_comment, name='add_comment'),
     path('forum/comment/<int:comment_id>/add_reply/', add_reply, name='add_reply'),
-    path('leaderboard/', leaderboard, name='leaderboard'),
+    path('api/leaderboard/', leaderboard, name='api_leaderboard'),
+    path('leaderboard/', TemplateView.as_view(template_name='leaderboard.html'), name='leaderboard'),
 ]

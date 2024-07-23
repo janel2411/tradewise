@@ -231,7 +231,10 @@ def add_reply(request, comment_id):
         reply_form = ReplyForm()
     return render(request, 'post_detail.html', {'post': post, 'reply_form': reply_form, 'comment': comment})
 
-#need to get my top 3 users in terms of points
+from django.http import JsonResponse
+from .models import Profile  # Adjust the import based on your actual model
+
 def leaderboard(request):
-    top_users = Profile.objects.all().order_by('-points')[:3]
-    return render(request, 'leaderboard.html', {'top_users': top_users})
+    users = Profile.objects.all().order_by('-points', 'username')[:5]
+    users_data = [{"username": user.username, "points": user.points, "first_name": user.first_name, "last_name": user.last_name} for user in users]
+    return JsonResponse(users_data, safe=False)
