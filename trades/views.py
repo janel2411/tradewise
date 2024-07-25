@@ -100,10 +100,11 @@ def signout(request):
 
 
 def dashboard(request):
-    #make sure user is authenticated first
-    if not request.user.is_authenticated:
-        return redirect('signin')
-    return render(request, 'dashboard.html')
+    profile = Profile.objects.get(user=request.user)
+    context = {
+        'profile': profile,
+    }
+    return render(request, 'dashboard.html', context)
 
 def lesson1(request):
     return render(request, 'lesson1.html')
@@ -123,7 +124,7 @@ from .models import Profile
 def updatepoints(request):
     if request.method == 'POST':
         profile = Profile.objects.get(user=request.user)
-        profile.points += 100
+        profile.points += 5
         profile.save()
         return JsonResponse({'success': True, 'points': profile.points})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})

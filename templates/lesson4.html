@@ -124,7 +124,7 @@
            <span class="highlight">Solution:</span> Always check higher time frames to identify the primary trend before making trades on shorter time frames. <strong>The trend is your friend.</strong>
         </p>
 
-        <button id="earn-points-btn" class="btn btn-custom mt-3">Complete Lesson and Earn 100 Points</button>
+        <button id="earn-points-btn" class="btn btn-custom mt-3">Complete Lesson and Earn 5 Points</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -140,7 +140,7 @@
                     },
                     success: function(response) {
                         if (response.success) {
-                            alert('You have earned 100 points! Total points: ' + response.points);
+                            alert('You have earned 5 points! Total points: ' + response.points);
                             $('#earn-points-btn').prop('disabled', true);
                         } else {
                             alert('Error: ' + response.error);

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,20 +31,21 @@
         .chapter-section .btn {
             margin-top: 10px;
         }
-        .progress-section, .outline-section {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 25px;
+            overflow: hidden;
+            margin: 20px 0;
         }
-        .progress-section h3, .outline-section h3 {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
-        }
+
         .progress-bar {
             height: 30px;
-            width: 100%;
+            background-color: #4caf50;
+            width: 0%;
+            transition: width 0.5s;
         }
+
         .outline-list {
             list-style: none;
             padding-left: 0;
@@ -122,14 +125,11 @@
     </div>
 
     <div class="container chapter-container">
-        <div class="progress-section">
-            <h3>Your Progress</h3>
-            <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                    1 out of 4 lessons completed
-                </div>
-            </div>
-        </div>
+        <div class="progress-container">
+            <p>User Profile: {{ profile }}</p>
+            <p>Experience Points: {{ profile.points }}</p>
+            <div class="progress-bar" style="width: {{ profile.points }}%;"></div>
+        <div>
         <div class="outline-section">
             <h3>Chapter Outline</h3>
             <ul class="outline-list">
