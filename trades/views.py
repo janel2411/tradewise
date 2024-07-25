@@ -1,4 +1,3 @@
-# views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -7,15 +6,28 @@ from .models import Profile
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
+import re
+from django.core.exceptions import ValidationError
+
 
 def index(request):
     is_signed_in = request.session.pop('is_signed_in', False)
     return render(request, 'index.html', {'is_signed_in': is_signed_in})
 
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from .models import Profile
+
+def validate_password(password):
+    if len(password) < 8:
+        raise ValidationError("Password must be at least 8 characters long.")
+    if not re.search(r"[A-Za-z]", password):
+        raise ValidationError("Password must contain at least one letter.")
+    if not re.search(r"[0-9]", password):
+        raise ValidationError("Password must contain at least one number.")
+    if not re.search(r"[!@#$%^&*]", password):
+        raise ValidationError("Password must contain at least one special character.")
+
+def validate_username(username):
+    if not re.match(r"^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+$", username):
+        raise ValidationError("Username must contain letters and numbers.")
 
 def signup(request):
     if request.method == "POST":
@@ -25,15 +37,39 @@ def signup(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        error_messages = []
+
+        # Email validation
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            error_messages.append("Invalid email address.")
+
+        # Username validation
+        try:
+            validate_username(username)
+        except ValidationError as e:
+            error_messages.append(str(e))
+
+        # Password validation
+        try:
+            validate_password(password)
+        except ValidationError as e:
+            error_messages.append(str(e))
+
+        if error_messages:
+            for message in error_messages:
+                messages.error(request, message)
+            return redirect('signup')
+
         try:
             user = User.objects.create_user(username=username, email=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
-            user.save()         
+            user.save()
+            
             messages.success(request, "Account created successfully. Please log in.")
             return redirect('index')
         except Exception as e:
-            messages.error(request, "Error creating account")
+            messages.error(request, "Error creating account: " + str(e))
             return redirect('signup')
 
     return render(request, 'signup.html')
@@ -49,18 +85,19 @@ def signin(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Welcome to TradeWise")
-            request.session['is_signed_in'] = True
-            return redirect('index')  #redirect to index page
+            return redirect('dashboard')  # Redirect to dashboard upon successful login
         else:
             messages.error(request, "Bad Credentials! Log In Again.")
-            return redirect('index') #prompted to sign in again if key in wrong pw/username
+            return render(request, 'index.html')  # Render the index page with error messages
 
-    return render(request, 'signin.html')
+    return render(request, 'index.html')
+
 
 def signout(request):
     logout(request)
-    messages.success(request,"Logged Out Successfully.")
+    messages.success(request, "Logged Out Successfully.")
     return redirect('index')
+
 
 def dashboard(request):
     profile = Profile.objects.get(user=request.user)
@@ -195,7 +232,33 @@ def add_reply(request, comment_id):
         reply_form = ReplyForm()
     return render(request, 'post_detail.html', {'post': post, 'reply_form': reply_form, 'comment': comment})
 
-#need to get my top 3 users in terms of points
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import Profile
+
+@login_required
 def leaderboard(request):
-    top_users = Profile.objects.all().order_by('-points')[:3]
-    return render(request, 'leaderboard.html', {'top_users': top_users})
+    # Get the top 5 ranks
+    top_users = list(Profile.objects.all().order_by('-points', 'username'))
+    top_users_filtered = []
+    last_points = None
+    rank_count = 0
+
+    for user in top_users:
+        if len(top_users_filtered) < 5 or (last_points is not None and user.points == last_points):
+            top_users_filtered.append(user)
+            last_points = user.points
+            rank_count = len(top_users_filtered)
+
+    top_users_data = [{"username": user.username, "points": user.points, "first_name": user.first_name, "last_name": user.last_name} for user in top_users_filtered]
+    
+    current_user = request.user
+    current_user_profile = Profile.objects.get(user=current_user)
+    current_user_data = {
+        "username": current_user.username,
+        "points": current_user_profile.points,
+        "first_name": current_user.first_name,
+        "last_name": current_user.last_name
+    }
+    
+    return JsonResponse({"top_users": top_users_data, "current_user": current_user_data})

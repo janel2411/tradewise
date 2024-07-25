@@ -22,8 +22,9 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             text-align: center;
+            box-sizing: border-box;
         }
 
         h1 {
@@ -32,18 +33,53 @@
             margin-bottom: 1em;
         }
 
+        .error {
+            display: none;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 0.5em;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+            text-align: left;
+            margin-top: 0.5em;
+        }
+
         label {
             display: block;
             font-size: 1em;
-            margin: 0.5em 0 0.2em;
+            margin-top: 1em;
+            text-align: left;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1em;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .input-group .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
 
         input {
             width: 100%;
             padding: 0.5em;
-            margin-bottom: 1em;
+            margin-bottom: 0.5em;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
         }
 
         button {
@@ -55,6 +91,7 @@
             border-radius: 5px;
             font-size: 1em;
             cursor: pointer;
+            margin-top: 1em;
         }
 
         button:hover {
@@ -63,6 +100,7 @@
 
         .login-link {
             margin-top: 1em;
+            text-align: center;
         }
 
         .login-link a {
@@ -79,24 +117,180 @@
 <body>
     <div class="container">
         <h1>Sign Up</h1>
-        <form method="POST" action="{% url 'signup' %}">
+        <form id="signupForm" method="POST" action="{% url 'signup' %}" novalidate>
             {% csrf_token %}
+            
             <label for="first_name">First Name</label>
-            <input type="text" id="first_name" name="first_name" required>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" required>
+            <div class="error" id="firstNameError"></div>
+            
             <label for="last_name">Last Name</label>
-            <input type="text" id="last_name" name="last_name" required>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter your last name" required>
+            <div class="error" id="lastNameError"></div>
+            
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            <div class="error" id="emailError"></div>
+            
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Only Letters & Numbers" required>
+            <input type="text" id="username" name="username" placeholder="Letters and numbers only" required>
+            <div class="error" id="usernameError"></div>
+            
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Min. 8 characters (include a letter, number, & special character)." required>
+                <span class="eye-icon" onclick="togglePasswordVisibility()">👁️</span>
+            </div>
+            <div class="error" id="passwordError"></div>
+            
             <button type="submit">Sign Up</button>
         </form>
         <div class="login-link">
-            <p>Already have an account? <a href="{% url 'signin' %}">Sign In Here</a></p>
+            <p>Already have an account? <a href="{% url 'index' %}">Sign In Here</a></p>
         </div>
     </div>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const eyeIcon = document.querySelector('.eye-icon');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.textContent = '🙈';
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.textContent = '👁️';
+            }
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            let valid = true;
+            
+            const firstName = document.getElementById('first_name').value;
+            const lastName = document.getElementById('last_name').value;
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
+            const usernamePattern = /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+$/;
+            const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])/;
+
+            const firstNameError = document.getElementById('firstNameError');
+            const lastNameError = document.getElementById('lastNameError');
+            const emailError = document.getElementById('emailError');
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+
+            firstNameError.style.display = 'none';
+            lastNameError.style.display = 'none';
+            emailError.style.display = 'none';
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            if (firstName.trim() === '') {
+                firstNameError.textContent = 'First name is required.';
+                firstNameError.style.display = 'block';
+                valid = false;
+            }
+
+            if (lastName.trim() === '') {
+                lastNameError.textContent = 'Last name is required.';
+                lastNameError.style.display = 'block';
+                valid = false;
+            }
+
+            if (!emailPattern.test(email)) {
+                emailError.textContent = 'Invalid email address.';
+                emailError.style.display = 'block';
+                valid = false;
+            }
+
+            if (!usernamePattern.test(username)) {
+                usernameError.textContent = 'Username must contain letters & numbers.';
+                usernameError.style.display = 'block';
+                valid = false;
+            }
+
+            if (password.length < 8 || !passwordPattern.test(password)) {
+                passwordError.textContent = 'Password must have at least 8 characters & include a letter, number, & special character.';
+                passwordError.style.display = 'block';
+                valid = false;
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+
+        // for real-time validation feedback
+        document.getElementById('first_name').addEventListener('input', function() {
+            const firstName = document.getElementById('first_name').value;
+            const firstNameError = document.getElementById('firstNameError');
+
+            if (firstName.trim() === '') {
+                firstNameError.textContent = 'First name is required.';
+                firstNameError.style.display = 'block';
+            } else {
+                firstNameError.textContent = '';
+                firstNameError.style.display = 'none';
+            }
+        });
+
+        document.getElementById('last_name').addEventListener('input', function() {
+            const lastName = document.getElementById('last_name').value;
+            const lastNameError = document.getElementById('lastNameError');
+
+            if (lastName.trim() === '') {
+                lastNameError.textContent = 'Last name is required.';
+                lastNameError.style.display = 'block';
+            } else {
+                lastNameError.textContent = '';
+                lastNameError.style.display = 'none';
+            }
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            const email = document.getElementById('email').value;
+            const emailError = document.getElementById('emailError');
+            const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
+
+            if (!emailPattern.test(email)) {
+                emailError.textContent = 'Invalid email address.';
+                emailError.style.display = 'block';
+            } else {
+                emailError.textContent = '';
+                emailError.style.display = 'none';
+            }
+        });
+
+        document.getElementById('username').addEventListener('input', function() {
+            const username = document.getElementById('username').value;
+            const usernameError = document.getElementById('usernameError');
+            const usernamePattern = /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+$/;
+
+            if (!usernamePattern.test(username)) {
+                usernameError.textContent = 'Username must contain letters & numbers.';
+                usernameError.style.display = 'block';
+            } else {
+                usernameError.textContent = '';
+                usernameError.style.display = 'none';
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const passwordError = document.getElementById('passwordError');
+            const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])/;
+
+            if (password.length < 8 || !passwordPattern.test(password)) {
+                passwordError.textContent = 'Password must have at least 8 characters & include a letter, number, & special character.';
+                passwordError.style.display = 'block';
+            } else {
+                passwordError.textContent = '';
+                passwordError.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
