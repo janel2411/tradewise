@@ -9,6 +9,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=254, blank=True)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
+    completed_lessons = models.JSONField(default=list)  # Store completed lesson IDs
 
     def __str__(self):
         return f"Username: {self.username}, Email: {self.email}, ID: {self.user.id}, First Name: {self.first_name}, Last Name: {self.last_name}"

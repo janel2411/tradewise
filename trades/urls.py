@@ -24,4 +24,6 @@ urlpatterns = [
     path('forum/comment/<int:comment_id>/add_reply/', add_reply, name='add_reply'),
     path('api/leaderboard/', leaderboard, name='api_leaderboard'),
     path('leaderboard/', TemplateView.as_view(template_name='leaderboard.html'), name='leaderboard'),
+    path('start_chapter/', start_chapter, name='start_chapter'),
+    path('complete_lesson/<str:lesson_id>/', complete_lesson, name='complete_lesson'),
 ]
