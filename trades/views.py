@@ -118,6 +118,42 @@ def lesson3(request):
 def lesson4(request):
     return render(request, 'lesson4.html')
 
+@login_required
+def start_chapter(request):
+    user_profile = request.user.profile
+    completed_lessons = user_profile.completed_lessons
+
+    lessons = ['lesson1', 'lesson2', 'lesson3', 'lesson4']
+    next_lesson = None
+
+    for lesson in lessons:
+        if lesson not in completed_lessons:
+            next_lesson = lesson
+            break
+
+    if next_lesson:
+        return redirect(next_lesson)
+    else:
+        return redirect('dashboard')
+    
+@login_required
+def complete_lesson(request, lesson_id):
+    if request.method == 'POST':
+        user_profile = request.user.profile
+
+        # Update points
+        user_profile.points += 5
+
+        # Mark lesson as completed
+        if lesson_id not in user_profile.completed_lessons:
+            user_profile.completed_lessons.append(lesson_id)
+        
+        user_profile.save()
+
+        return JsonResponse({'success': True, 'points': user_profile.points})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
 from django.http import JsonResponse
 from .models import Profile
 
