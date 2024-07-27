@@ -298,3 +298,45 @@ def leaderboard(request):
     }
     
     return JsonResponse({"top_users": top_users_data, "current_user": current_user_data})
+
+import requests
+from django.shortcuts import render
+from django.conf import settings
+import logging
+
+# Set up logging
+logger = logging.getLogger(__name__)
+
+def fetch_market_news(request):
+    tickers = [
+        "eurusd", "usdjpy", "gbpusd", "usdchf", "audusd", "usdcad", "nzdusd"
+    ]
+    data = []
+
+    url_template = "https://api.tiingo.com/tiingo/fx/{}/top"
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Token {settings.TIINGO_API_TOKEN}'
+    }
+
+    for ticker in tickers:
+        url = url_template.format(ticker)
+        try:
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()  # Raise an exception for HTTP errors
+            json_response = response.json()
+            if json_response:  # Check if the response is not empty
+                data.append({
+                    "ticker": ticker,
+                    "bidPrice": json_response[0].get('bidPrice', 'N/A'),
+                    "askPrice": json_response[0].get('askPrice', 'N/A')
+                })
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to fetch data for {ticker}: {e}")
+            data.append({
+                "ticker": ticker,
+                "bidPrice": 'N/A',
+                "askPrice": 'N/A'
+            })
+
+    return render(request, 'market_news.html', {'market_data': data})
