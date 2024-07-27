@@ -26,4 +26,5 @@ urlpatterns = [
     path('leaderboard/', TemplateView.as_view(template_name='leaderboard.html'), name='leaderboard'),
     path('start_chapter/', start_chapter, name='start_chapter'),
     path('complete_lesson/<str:lesson_id>/', complete_lesson, name='complete_lesson'),
+    path('market-news/', fetch_market_news, name='market_news'),
 ]

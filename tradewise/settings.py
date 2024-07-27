@@ -158,3 +158,25 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
+
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Manually load environment variables from the .env file
+def load_env_file(file_path):
+    with open(file_path) as f:
+        for line in f:
+            if line.strip() and not line.startswith("#"):
+                key, value = line.strip().split('=', 1)
+                os.environ[key] = value
+
+# Load environment variables from the .env file
+env_file_path = os.path.join(BASE_DIR, '.env')
+if os.path.exists(env_file_path):
+    load_env_file(env_file_path)
+
+# Set your Tiingo API token
+TIINGO_API_TOKEN = os.getenv('TIINGO_API_TOKEN')
+
+print(f"TIINGO_API_TOKEN: {TIINGO_API_TOKEN}")  # For debugging purposes
