@@ -13,37 +13,51 @@
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
         }
+
         .container-main {
             margin-top: 30px;
             text-align: center;
         }
+
         .chapter-section {
             margin-top: 30px;
             text-align: center;
         }
+
         .chapter-section h2 {
             font-size: 1.5rem;
             margin-bottom: 10px;
         }
+
         .chapter-section p {
             font-size: 1rem;
         }
+
         .chapter-section .btn {
             margin-top: 10px;
         }
+
         .progress-container {
             width: 100%;
             background-color: #f3f3f3;
             border-radius: 25px;
             overflow: hidden;
             margin: 20px 0;
+            height: 30px;
+            position: relative;
+            border: 2px solid black; /* Add this line to set black borders for the container */
         }
 
         .progress-bar {
-            height: 30px;
+            height: 100%;
             background-color: #4caf50;
-            width: 0%;
+            border-radius: 25px;
             transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
         }
 
         .outline-list {
@@ -51,12 +65,14 @@
             padding-left: 0;
             text-align: left;
         }
+
         .outline-list li {
             font-size: 1rem;
             margin-bottom: 10px;
             position: relative;
             padding-left: 20px;
         }
+
         .outline-list li::before {
             content: "•";
             position: absolute;
@@ -65,19 +81,22 @@
             color: black;
             font-size: 1.25rem;
         }
+
         .chapter-container {
             display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
+            justify-content: space-between;
+            align-items: center; /* Vertically center items */
             margin-top: 40px;
         }
+
         .chapter-container > div {
             flex: 1;
             margin: 0 20px;
         }
+
         .logo {
-            width: 100px; 
-            height: auto; 
+            width: 100px;
+            height: auto;
         }
     </style>
 </head>
@@ -125,11 +144,14 @@
     </div>
 
     <div class="container chapter-container">
-        <div class="progress-container">
-            <p>User Profile: {{ profile }}</p>
-            <p>Experience Points: {{ profile.points }}</p>
-            <div class="progress-bar" style="width: {{ profile.points }}%;"></div>
         <div>
+            <h3>Progress Bar</h3>
+            <div class="progress-container" style="margin-right: 20px;">
+                <div class="progress-bar" style="width: {{ profile.points }}%;">
+                    {{ profile.points }} XP
+                </div>
+            </div>
+        </div>
         <div class="outline-section">
             <h3>Chapter Outline</h3>
             <ul class="outline-list">
