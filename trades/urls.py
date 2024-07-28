@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import *
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', index, name='index'),
@@ -28,3 +30,6 @@ urlpatterns = [
     path('complete_lesson/<str:lesson_id>/', complete_lesson, name='complete_lesson'),
     path('market-news/', fetch_market_news, name='market_news'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

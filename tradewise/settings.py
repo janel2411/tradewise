@@ -183,3 +183,6 @@ if os.path.exists(env_file_path):
 TIINGO_API_TOKEN = os.getenv('TIINGO_API_TOKEN')
 
 print(f"TIINGO_API_TOKEN: {TIINGO_API_TOKEN}")  # For debugging purposes
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
