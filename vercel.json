@@ -9,14 +9,18 @@
         }
       },
       {
-        "src": "backend/manage.py",
+        "src": "trades/requirements.txt",
         "use": "@vercel/python"
       }
     ],
     "routes": [
       {
+        "src": "/static/(.*)",
+        "dest": "frontend/build/static/$1"
+      },
+      {
         "src": "/api/(.*)",
-        "dest": "backend/$1"
+        "dest": "trades/$1"
       },
       {
         "src": "/(.*)",
