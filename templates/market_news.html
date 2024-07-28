@@ -1,67 +1,112 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latest Market News - TradeWise</title>
+    <title>Dashboard - TradeWise</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/lux/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .market-news {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-            font-weight: normal !important; /* Ensure headers are not bold */
-            font-size: 100%; /* Ensures uniform text size */
-            font-style: normal; /* Ensures normal text style */
-            font-variant: normal; /* Ensures normal text variant */
-            font-family: inherit; /* Ensures inherited font */
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-        .ticker {
-            font-weight: bold;
-            color: #007BFF;
-        }
-        .disclaimer {
-            text-align: center;
-            font-size: 12px;
-            color: #999;
-        }
         .navbar {
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
+        }
+        .container-main {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .chapter-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .chapter-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .chapter-section p {
+            font-size: 1rem;
+        }
+        .chapter-section .btn {
+            margin-top: 10px;
+        }
+        .progress-section, .outline-section {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .progress-section h3, .outline-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+        .progress-bar {
+            height: 30px;
+            width: 100%;
+        }
+        .outline-list {
+            list-style: none;
+            padding-left: 0;
+            text-align: left;
+        }
+        .outline-list li {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        .outline-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: black;
+            font-size: 1.25rem;
+        }
+        .chapter-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-top: 40px;
+        }
+        .chapter-container > div {
+            flex: 1;
+            margin: 0 20px;
+        }
+        .logo {
+            width: 100px; 
+            height: auto; 
+        }
+        .market-news {
+            margin: 30px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+        .market-news h1 {
+            margin-bottom: 20px;
+        }
+        .market-news table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        .market-news table th, .market-news table td {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+        }
+        .market-news table th {
+            background-color: #f8f9fa;
+        }
+        .market-news table tbody tr:nth-child(odd) {
+            background-color: #f8f9fa;
+        }
+        .market-news table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .market-news .disclaimer {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -97,7 +142,7 @@
 
     <div class="market-news">
         <h1>Latest Market News</h1>
-        <table>
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Ticker</th>
@@ -116,10 +161,12 @@
             </tbody>
         </table>
         <div class="disclaimer">
-            Data pulled from Tiingo API
+            Market data above was obtained using Tiingo API, a reliable, enterprise-grade financial markets API.
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

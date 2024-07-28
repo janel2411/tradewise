@@ -29,6 +29,11 @@ def validate_username(username):
     if not re.match(r"^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+$", username):
         raise ValidationError("Username must contain letters and numbers.")
 
+
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.core.exceptions import ValidationError
+
 def signup(request):
     if request.method == "POST":
         first_name = request.POST.get('first_name')
@@ -74,7 +79,6 @@ def signup(request):
 
     return render(request, 'signup.html')
 
-
 def signin(request):
     if request.method == "POST":
         username = request.POST.get('username').strip()
@@ -84,11 +88,10 @@ def signin(request):
 
         if user is not None:
             login(request, user)
-            messages.success(request, "Welcome to TradeWise")
-            return redirect('dashboard')  # Redirect to dashboard upon successful login
+            return redirect('dashboard')
         else:
             messages.error(request, "Bad Credentials! Log In Again.")
-            return render(request, 'index.html')  # Render the index page with error messages
+            return redirect('index')
 
     return render(request, 'index.html')
 

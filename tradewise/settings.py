@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'tradewise_db',  
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb+srv://e1156808:OZ9wM6NhvmzElqCO@tradewisecluster.itzxyju.mongodb.net/tradewise_db',  
+            'host': 'mongodb+srv://e1156808:OZ9wM6NhvmzElqCO@tradewisecluster.itzxyju.mongodb.net/',  
             'username': 'e1156808',
             'password': 'OZ9wM6NhvmzElqCO',
             'authSource': 'admin',  # Ensure the authentication database is set correctly
