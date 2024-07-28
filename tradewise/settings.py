@@ -82,6 +82,7 @@ WSGI_APPLICATION = 'tradewise.wsgi.application'
 
 import ssl
 import certifi
+import os
 
 DATABASES = {
     'default': {
@@ -135,7 +136,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
