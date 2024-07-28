@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2xnw0hauslq6zhke#%q-shun@jvhpguvuff#=%@pdgf__z1a98'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -86,13 +86,13 @@ import certifi
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'tradewise_db',  
+        'NAME': os.environ.get('MONGODB_NAME', 'tradewise_db'), 
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb+srv://e1156808:OZ9wM6NhvmzElqCO@tradewisecluster.itzxyju.mongodb.net/',  
-            'username': 'e1156808',
-            'password': 'OZ9wM6NhvmzElqCO',
-            'authSource': 'admin',  # Ensure the authentication database is set correctly
+            'host': os.environ.get('MONGODB_HOST'),
+            'username': os.environ.get('MONGODB_USER'),
+            'password': os.environ.get('MONGODB_PASSWORD'),
+            'authSource': 'admin',
             'authMechanism': 'SCRAM-SHA-1',
             'ssl': True,
             'tlsCAFile': certifi.where(),
