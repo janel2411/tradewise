@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2xnw0hauslq6zhke#%q-shun@jvhpguvuff#=%@pdgf__z1a98'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -83,16 +83,19 @@ WSGI_APPLICATION = 'tradewise.wsgi.application'
 import ssl
 import certifi
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': os.environ.get('MONGODB_NAME', 'tradewise_db'), 
+        'NAME': 'tradewise_db',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': os.environ.get('MONGODB_HOST'),
-            'username': os.environ.get('MONGODB_USER'),
-            'password': os.environ.get('MONGODB_PASSWORD'),
+            'host': os.getenv('MONGODB_URI'),
+            'username': os.getenv('MONGODB_USER'),
+            'password': os.getenv('MONGODB_PASS'),
             'authSource': 'admin',
             'authMechanism': 'SCRAM-SHA-1',
             'ssl': True,
